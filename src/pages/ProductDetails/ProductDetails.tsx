@@ -3,17 +3,31 @@ import { useParams, Link } from 'react-router-dom';
 import { type Product } from '../../interface/Product';
 import { mockProducts } from '../../data/products';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import ProductCard from '../../component/ProductCard/ProductCard';
 
 const ProductDetails: React.FC = () => {
     // Pega o 'id' da URL usando o hook useParams
     const { id } = useParams<{ id: string }>();
     const [product, setProduct] = useState<Product | undefined>(undefined);
+    const [recommended, setRecommended] = useState<Product[]>([]);
 
     // Busca o produto nos dados mockados quando o 'id' muda
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         if (id) {
-            const foundProduct = mockProducts.find(p => p.id === parseInt(id, 10));
+            const currentId = parseInt(id, 10);
+            const foundProduct = mockProducts.find(p => p.id === currentId);
             setProduct(foundProduct);
+
+            // Lógica para selecionar produtos recomendados:
+            if (foundProduct) {
+                const otherProducts = mockProducts
+                    .filter(p => p.id !== currentId) // Exclui o produto atual
+                    .sort(() => 0.5 - Math.random()) // Embaralha a lista
+                    .slice(0, 4); // Pega os primeiros 4 (ajuste o número se quiser)
+                setRecommended(otherProducts);
+            }
         }
     }, [id]);
 
@@ -39,6 +53,7 @@ const ProductDetails: React.FC = () => {
                 Voltar para a lista
             </Link>
 
+            {/* Seção Principal do Produto */}
             <div className="bg-white p-6 md:p-10 rounded-lg shadow-xl flex flex-col lg:flex-row gap-8 lg:gap-16">
 
                 {/* Seção da Imagem */}
@@ -67,6 +82,20 @@ const ProductDetails: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Seção de Produtos Recomendados */}
+            {recommended.length > 0 && (
+                <div className="mt-20 pt-10 border-t border-gray-200">
+                    <h2 className="text-2xl font-semibold text-gray-900 mb-6 text-center lg:text-left">
+                        Outros produtos que você pode gostar
+                    </h2>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                        {recommended.map((recProduct) => (
+                            <ProductCard key={recProduct.id} product={recProduct} />
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
