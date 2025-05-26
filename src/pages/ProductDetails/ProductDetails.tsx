@@ -4,12 +4,15 @@ import { type Product } from '../../interface/Product';
 import { mockProducts } from '../../data/products';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import ProductCard from '../../component/ProductCard/ProductCard';
+import { useCart } from '../../context/CartContext'
+import toast from 'react-hot-toast';
 
 const ProductDetails: React.FC = () => {
     // Pega o 'id' da URL usando o hook useParams
     const { id } = useParams<{ id: string }>();
     const [product, setProduct] = useState<Product | undefined>(undefined);
     const [recommended, setRecommended] = useState<Product[]>([]);
+    const { addToCart } = useCart();
 
     // Busca o produto nos dados mockados quando o 'id' muda
     useEffect(() => {
@@ -43,6 +46,11 @@ const ProductDetails: React.FC = () => {
         );
     }
 
+    const handleAddToCart = () => {
+        addToCart(product);
+        toast.success(`${product.name} foi adicionado ao carrinho!`);
+    };
+
     return (
         <div className="container mx-auto p-4 sm:p-8">
             <Link
@@ -75,6 +83,7 @@ const ProductDetails: React.FC = () => {
                             R$ {product.price.toFixed(2).replace('.', ',')}
                         </div>
                         <button
+                            onClick={handleAddToCart}
                             className="w-full bg-green-500 text-white py-3 px-8 rounded-lg font-semibold text-lg hover:bg-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-md hover:shadow-lg"
                         >
                             Adicionar ao Carrinho
