@@ -1,5 +1,6 @@
 import React from 'react';
 import { type Product } from "../../interface/Product";
+import { useNavigate } from 'react-router-dom';
 
 interface ProductCardProps {
     product: Product;
@@ -8,18 +9,28 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+
+    const navigate = useNavigate();
+
+    // Função para navegar para os detalhes
+    const handleViewDetails = () => {
+        navigate(`/product/${product.id}`);
+    };
+
     return (
-        <div className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col">
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group overflow-hidden">
             <div className="p-4 flex-grow">
                 <img
                     src={product.imageUrl}
                     alt={product.name}
-                    className="w-full h-48 object-contain rounded-t-lg mb-4 cursor-pointer" // object-contain é mais comum para e-commerce
+                    className="w-full h-48 object-contain rounded-t-lg mb-4 cursor-pointer group-hover:scale-105 transition-transform duration-300"
+                    onClick={handleViewDetails}
                 />
-                <h2 className="text-base font-medium text-gray-800 mb-2 h-12_ line-clamp-2 cursor-pointer">
+                <h2 className="text-base font-medium text-gray-800 mb-2 h-12 line-clamp-2 cursor-pointer hover:text-blue-600"
+                    onClick={handleViewDetails}
+                >
                     {product.name}
                 </h2>
-                {/* <p className="text-sm text-gray-600 mb-3 h-10 line-clamp-2">{product.description}</p> */}
                 <p className="text-xl font-bold text-gray-900 mb-4">
                     R$ {product.price.toFixed(2).replace('.', ',')}
                 </p>
@@ -32,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     Adicionar ao Carrinho
                 </button>
                 <button
-                    // onClick={() => navigate(`/product/${product.id}`)} // Adicionaremos a navegação depois
+                    onClick={handleViewDetails}
                     className="w-full mt-2 bg-gray-100 text-gray-700 py-2.5 px-4 rounded-md hover:bg-gray-200 transition-colors duration-200"
                 >
                     Ver Detalhes
