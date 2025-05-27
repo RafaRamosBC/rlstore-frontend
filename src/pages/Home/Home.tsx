@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProductList from '../../component/ProductList/ProductList';
+import { useSearch } from '../../context/SearchContext';
 
 const Home: React.FC = () => {
+
+    const { setSearchTerm } = useSearch();
+
+    useEffect(() => {
+        // Limpa o termo de busca ao entrar na Home
+        setSearchTerm('');
+    }, [setSearchTerm]);
+
     return (
-        <div className="min-h-screen bg-gray-100">
-            {/* Aqui você pode adicionar um Header/Navbar no futuro */}
+        <div className="min-h-screen bg-gray-50">
             <ProductList />
-            {/* Aqui você pode adicionar um Footer no futuro */}
         </div>
     );
 };
