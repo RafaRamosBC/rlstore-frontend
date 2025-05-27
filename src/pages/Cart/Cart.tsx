@@ -1,12 +1,35 @@
 import React from 'react';
 import { useCart } from '../../context/CartContext';
 import CartItemRow from '../../component/CartItemRow/CartItemRow';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Cart: React.FC = () => {
     const { cartItems, getCartTotal, clearCart } = useCart();
-
+    const navigate = useNavigate();
     const total = getCartTotal();
+
+    const handleCheckout = () => {
+        if (cartItems.length === 0) {
+            toast.error("Seu carrinho está vazio!");
+            return;
+        }
+
+        // 1. Mostra uma mensagem de "processando"
+        toast.loading('Finalizando seu pedido...', { duration: 1500 });
+
+        // 2. Após um pequeno atraso (simulando processamento):
+        setTimeout(() => {
+            // 3. Limpa o carrinho
+            clearCart();
+            // 4. Remove o toast de 'loading'
+            toast.dismiss();
+            // 5. Mostra o toast de sucesso
+            toast.success('Pedido finalizado com sucesso!');
+            // 6. Navega para a página de sucesso
+            navigate('/checkout-success');
+        }, 1500); // Espera 1.5 segundos
+    };
 
     return (
         <div className="container mx-auto p-4 sm:p-8">
@@ -60,7 +83,7 @@ const Cart: React.FC = () => {
                             <span>R$ {total.toFixed(2).replace('.', ',')}</span>
                         </div>
                         <button
-                            onClick={() => alert('Função "Finalizar Compra" ainda não implementada!')}
+                            onClick={handleCheckout}
                             className="w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold text-lg hover:bg-green-600 transition shadow-lg"
                         >
                             Finalizar Compra

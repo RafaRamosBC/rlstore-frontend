@@ -6,6 +6,7 @@ import ProductDetails from './pages/ProductDetails/ProductDetails';
 import { CartProvider } from './context/CartContext';
 import { Toaster } from 'react-hot-toast';
 import Cart from './pages/Cart/Cart';
+import CheckoutSuccess from './pages/CheckoutSuccess/CheckoutSuccess';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/product/:id" element={<ProductDetails />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout-success" element={<CheckoutSuccess />} />
             </Routes>
           </main>
           <Footer />
