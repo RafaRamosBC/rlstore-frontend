@@ -46,15 +46,13 @@ Siga os passos abaixo para configurar e rodar o projeto localmente:
 
 1.  **Clone o Repositório:**
     ```bash
-    git clone <URL_DO_SEU_REPOSITORIO_AQUI>
+    git clone https://github.com/RafaRamosBC/rlstore-frontend.git
     ```
-    *(Substitua `<URL_DO_SEU_REPOSITORIO_AQUI>` pela URL real do seu projeto no GitHub)*
 
 2.  **Navegue até a Pasta do Projeto:**
     ```bash
-    cd nome-da-pasta-do-projeto
+    cd rlstore-frontend
     ```
-    *(Substitua `nome-da-pasta-do-projeto` pelo nome da pasta criada pelo git clone)*
 
 3.  **Instale as Dependências:**
     ```bash
