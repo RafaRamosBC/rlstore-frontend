@@ -5,6 +5,7 @@ import Footer from './component/Footer/Footer';
 import ProductDetails from './pages/ProductDetails/ProductDetails';
 import { CartProvider } from './context/CartContext';
 import { Toaster } from 'react-hot-toast';
+import Cart from './pages/Cart/Cart';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/cart" element={<Cart />} />
             </Routes>
           </main>
           <Footer />
