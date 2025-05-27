@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     };
 
     return (
-        <header className="bg-white shadow-md sticky top-0 z-50">
+        <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center gap-4">
                 {/* Logo */}
                 <Link to="/" className="text-2xl md:text-3xl font-bold text-blue-600 cursor-pointer flex-shrink-0">
@@ -43,7 +43,6 @@ const Header: React.FC = () => {
                         </div>
                     </div>
                 ) : (
-                    // Adiciona um espaço vazio para manter o ícone do carrinho à direita
                     <div className="flex-1"></div>
                 )}
 
